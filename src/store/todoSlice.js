@@ -6,20 +6,21 @@ const todoSlice = createSlice({
     todos: [],
   },
   reducers: {
-    addTodo(state, action) {
+    addTodo(state, { payload: { value } }) {
+      if (!value) return;
       state.todos.push({
         id: new Date().toISOString(),
-        text: action.payload.text,
+        text: value,
         completed: false,
       })
     },
 
-    removeTodo(state, action) {
-      state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
+    removeTodo(state, { payload: { id } }) {
+      state.todos = state.todos.filter(todo => todo.id !== id)
     },
 
-    toggleTodoCompete(state, action) {
-      const toggledTodo = state.todos.find(todo => todo.id === action.payload.id);
+    toggleTodoCompete(state, { payload: { id } }) {
+      const toggledTodo = state.todos.find(todo => todo.id === id);
       toggledTodo.completed = !toggledTodo.completed;
     },
   },
